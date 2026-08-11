@@ -1,7 +1,9 @@
 package com.omkar.student_management.controller;
 
 
-import com.omkar.student_management.repository.StudentRepository;
+import com.omkar.student_management.entity.Student;
+import com.omkar.student_management.service.StudentService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,15 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/students")
 public class StudentController {
 
-    private final StudentRepository studentRepository;
+    private final StudentService studentService;
 
-    public StudentController(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     @PostMapping
-    public String test(){
-        return "Studetn API working";
+    public Student saveStudent(@RequestBody Student student){
+        return studentService.saveStudent(student);
     }
 }
 
