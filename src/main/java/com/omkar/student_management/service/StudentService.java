@@ -1,10 +1,12 @@
 package com.omkar.student_management.service;
 
 import com.omkar.student_management.entity.Student;
+import com.omkar.student_management.exception.StudentNotFoundException;
 import com.omkar.student_management.repository.StudentRepository;
 import org.springframework.stereotype.Service;
-
+import java.util.Optional;
 import java.util.List;
+import com.omkar.student_management.exception.StudentNotFoundException;
 
 @Service
 public class StudentService {
@@ -22,6 +24,13 @@ public class StudentService {
 
     public List<Student> getAllStudents(){
         return studentRepository.findAll();
+    }
+
+    public Student getStudentById(Long id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(
+                        "Student not found with id: " + id
+                ));
     }
 }
 
