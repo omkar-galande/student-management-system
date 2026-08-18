@@ -28,9 +28,24 @@ public class StudentService {
 
     public Student getStudentById(Long id) {
         return studentRepository.findById(id)
+
                 .orElseThrow(() -> new StudentNotFoundException(
                         "Student not found with id: " + id
                 ));
     }
+
+    public Student updateStudent(Long id, Student newStudent){
+        Student student =  studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(
+                "Student not found with id: "+ id
+        ));
+
+        student.setName(newStudent.getName());
+        student.setAddress(newStudent.getAddress());
+        student.setCourse(newStudent.getCourse());
+        student.setEmail(newStudent.getEmail());
+        student.setPhone(newStudent.getPhone());
+        return studentRepository.save(student);
+    }
+
 }
 

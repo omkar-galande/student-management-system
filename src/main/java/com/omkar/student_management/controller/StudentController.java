@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import com.omkar.student_management.exception.StudentNotFoundException;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -33,6 +34,13 @@ public class StudentController {
     @GetMapping("/{id}")
     public Student getStudentById(@PathVariable Long id){
         return studentService.getStudentById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Student updateStudent(
+        @PathVariable Long id,
+                @RequestBody Student newStudent){
+        return studentService.updateStudent(id, newStudent);
     }
 
     @ExceptionHandler(StudentNotFoundException.class)
