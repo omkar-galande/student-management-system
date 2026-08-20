@@ -46,6 +46,14 @@ public class StudentService {
         student.setPhone(newStudent.getPhone());
         return studentRepository.save(student);
     }
+    public void deleteStudent(Long id) {
 
+        studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(
+                        "Student not found with id: " + id
+                ));
+
+        studentRepository.deleteById(id);
+    }
 }
 

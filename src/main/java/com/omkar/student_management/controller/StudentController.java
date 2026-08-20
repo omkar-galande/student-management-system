@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import com.omkar.student_management.exception.StudentNotFoundException;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 
@@ -41,6 +42,12 @@ public class StudentController {
         @PathVariable Long id,
                 @RequestBody Student newStudent){
         return studentService.updateStudent(id, newStudent);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteStudent(@PathVariable Long id){
+        studentService.deleteStudent(id);
+        return "Student deleted successfully";
     }
 
     @ExceptionHandler(StudentNotFoundException.class)
