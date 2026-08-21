@@ -1,5 +1,7 @@
 package com.omkar.student_management.controller;
 
+import com.omkar.student_management.dto.StudentRequest;
+import com.omkar.student_management.dto.StudentResponse;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.omkar.student_management.entity.Student;
 import com.omkar.student_management.service.StudentService;
@@ -24,24 +26,24 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student saveStudent(@RequestBody Student student){
-        return studentService.saveStudent(student);
+    public StudentResponse saveStudent(@RequestBody StudentRequest request){
+        return studentService.saveStudent(request);
     }
 
     @GetMapping
-    public List<Student> getAllStudent(){
+    public List<StudentResponse > getAllStudent(){
         return studentService.getAllStudents();
     }
     @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable Long id){
+    public StudentResponse getStudentById(@PathVariable Long id){
         return studentService.getStudentById(id);
     }
 
     @PutMapping("/{id}")
-    public Student updateStudent(
+    public StudentResponse updateStudent(
         @PathVariable Long id,
-                @RequestBody Student newStudent){
-        return studentService.updateStudent(id, newStudent);
+                @RequestBody StudentRequest request){
+        return studentService.updateStudent(id, request);
     }
 
     @DeleteMapping("/{id}")

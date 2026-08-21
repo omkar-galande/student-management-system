@@ -1,13 +1,12 @@
-package com.omkar.student_management.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+package com.omkar.student_management.dto;
 
-@Entity
-@Table(name = "students")
-public class Student {
+public class StudentResponse {
+    private Long id;
+    private String name;
+    private String email;
+    private String course;
+    private String phone;
+    private String address;
 
     public Long getId() {
         return id;
@@ -16,16 +15,6 @@ public class Student {
     public void setId(Long id) {
         this.id = id;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private Long id;
-    private String name;
-    private String email;
-    private String course;
-    private String phone;
-    private String address;
 
     public String getName() {
         return name;
