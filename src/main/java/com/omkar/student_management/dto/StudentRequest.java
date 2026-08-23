@@ -1,11 +1,24 @@
 package com.omkar.student_management.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class StudentRequest {
+    @NotBlank
     private String name;
+
+    @NotBlank
+    @Email
     private String email;
+
+    @NotBlank
     private String course;
+    @NotBlank
     private String phone;
+
+    @NotBlank
     private String address;
+
 
     public void setName(String name) {
         this.name = name;

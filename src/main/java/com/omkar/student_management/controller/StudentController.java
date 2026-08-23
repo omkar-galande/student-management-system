@@ -2,6 +2,7 @@ package com.omkar.student_management.controller;
 
 import com.omkar.student_management.dto.StudentRequest;
 import com.omkar.student_management.dto.StudentResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.omkar.student_management.entity.Student;
 import com.omkar.student_management.service.StudentService;
@@ -26,7 +27,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public StudentResponse saveStudent(@RequestBody StudentRequest request){
+    public StudentResponse saveStudent(@Valid @RequestBody StudentRequest request){
         return studentService.saveStudent(request);
     }
 
@@ -42,7 +43,7 @@ public class StudentController {
     @PutMapping("/{id}")
     public StudentResponse updateStudent(
         @PathVariable Long id,
-                @RequestBody StudentRequest request){
+              @Valid @RequestBody StudentRequest request){
         return studentService.updateStudent(id, request);
     }
 
