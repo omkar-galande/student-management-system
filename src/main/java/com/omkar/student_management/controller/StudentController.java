@@ -4,13 +4,8 @@ import com.omkar.student_management.dto.StudentRequest;
 import com.omkar.student_management.dto.StudentResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
-import com.omkar.student_management.entity.Student;
 import com.omkar.student_management.service.StudentService;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import com.omkar.student_management.exception.StudentNotFoundException;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
@@ -53,11 +48,11 @@ public class StudentController {
         return "Student deleted successfully";
     }
 
-    @ExceptionHandler(StudentNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleStudentNotFound(StudentNotFoundException ex){
-        return ex.getMessage();
-    }
+//    @ExceptionHandler(StudentNotFoundException.class)
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    public String handleStudentNotFound(StudentNotFoundException ex){
+//        return ex.getMessage();
+//    }
 }
 
 
