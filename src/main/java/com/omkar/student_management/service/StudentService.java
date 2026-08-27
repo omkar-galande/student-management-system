@@ -4,6 +4,7 @@ import com.omkar.student_management.dto.StudentRequest;
 import com.omkar.student_management.dto.StudentResponse;
 import com.omkar.student_management.entity.Student;
 import com.omkar.student_management.exception.StudentNotFoundException;
+import com.omkar.student_management.mapper.StudentMapper;
 import com.omkar.student_management.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,28 +16,21 @@ import java.util.List;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    public final StudentMapper studentMapper;
 
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
 
         this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
     }
 
+
     public StudentResponse saveStudent(StudentRequest request){
-        Student student  = new Student();
-        student.setName(request.getName());
-        student.setEmail(request.getEmail());
-        student.setCourse(request.getCourse());
-        student.setPhone(request.getPhone());
-        student.setAddress(request.getAddress());
+        Student student = studentMapper.toEntity(request);
+
         student = studentRepository.save(student);
-        StudentResponse response = new StudentResponse();
-        response.setId(student.getId());
-        response.setName(student.getName());
-        response.setAddress(student.getAddress());
-        response.setCourse(student.getCourse());
-        response.setPhone(student.getPhone());
-        response.setEmail(student.getEmail());
-        return response;
+
+        return studentMapper.toResponse(student);
     }
 
     public List<StudentResponse> getAllStudents(){
@@ -44,15 +38,7 @@ public class StudentService {
         List<StudentResponse> responses = new ArrayList<>();
 
         for(Student student : students){
-            StudentResponse response = new StudentResponse();
-            response.setId(student.getId());
-            response.setName(student.getName());
-            response.setEmail(student.getEmail());
-            response.setCourse(student.getCourse());
-            response.setPhone(student.getPhone());
-            response.setAddress(student.getAddress());
-
-            responses.add(response);
+            responses.add(studentMapper.toResponse(student));
         }
         return responses;
     }
@@ -64,14 +50,7 @@ public class StudentService {
                 .orElseThrow(() -> new StudentNotFoundException(
                         "Student not found with id: " + id
                 ));
-        StudentResponse response = new StudentResponse();
-        response.setId(student.getId());
-        response.setName(student.getName());
-        response.setPhone(student.getPhone());
-        response.setEmail(student.getEmail());
-        response.setAddress(student.getAddress());
-        response.setCourse(student.getCourse());
-        return response;
+        return studentMapper.toResponse(student);
     }
 
     public StudentResponse updateStudent(Long id, StudentRequest request){
@@ -86,15 +65,7 @@ public class StudentService {
         student.setPhone(request.getPhone());
         student =  studentRepository.save(student);
 
-        StudentResponse response = new StudentResponse();
-        response.setId(student.getId());
-        response.setName(student.getName());
-        response.setEmail(student.getEmail());
-        response.setCourse(student.getCourse());
-        response.setPhone(student.getPhone());
-        response.setAddress(student.getAddress());
-
-        return response;
+        return studentMapper.toResponse(student);
     }
     public void deleteStudent(Long id) {
 
