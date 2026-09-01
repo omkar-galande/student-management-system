@@ -6,11 +6,11 @@ import com.omkar.student_management.entity.Student;
 import com.omkar.student_management.exception.StudentNotFoundException;
 import com.omkar.student_management.mapper.StudentMapper;
 import com.omkar.student_management.repository.StudentRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class StudentService {
@@ -33,14 +33,14 @@ public class StudentService {
         return studentMapper.toResponse(student);
     }
 
-    public List<StudentResponse> getAllStudents(){
-        List<Student> students = studentRepository.findAll();
+    public Page<StudentResponse> getAllStudents(Pageable pageable){
+        Page<Student> students = studentRepository.findAll(pageable);
         List<StudentResponse> responses = new ArrayList<>();
 
         for(Student student : students){
             responses.add(studentMapper.toResponse(student));
         }
-        return responses;
+        return students.map(studentMapper::toResponse);
     }
 
     public StudentResponse getStudentById(Long id) {
