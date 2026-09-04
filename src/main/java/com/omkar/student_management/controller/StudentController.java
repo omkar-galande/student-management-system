@@ -2,6 +2,7 @@ package com.omkar.student_management.controller;
 
 import com.omkar.student_management.dto.StudentRequest;
 import com.omkar.student_management.dto.StudentResponse;
+import com.omkar.student_management.entity.Student;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/students")
@@ -48,6 +51,16 @@ public class StudentController {
     public String deleteStudent(@PathVariable Long id){
         studentService.deleteStudent(id);
         return "Student deleted successfully";
+    }
+
+    @GetMapping("/course/{course}")
+    public List<StudentResponse> getStudentByCourse(@PathVariable String course){
+        return studentService.getStudentByCourse(course);
+    }
+
+    @GetMapping("/name/{name}")
+    public List<StudentResponse> getStudentsByName(@PathVariable String name) {
+        return studentService.getStudentsByName(name);
     }
 
 //    @ExceptionHandler(StudentNotFoundException.class)

@@ -76,5 +76,16 @@ public class StudentService {
 
         studentRepository.deleteById(id);
     }
+
+    public List<StudentResponse> getStudentByCourse(String course){
+        List<Student> students = studentRepository.findByCourse(course);
+
+        return students.stream().map(studentMapper::toResponse).toList();
+    }
+
+    public List<StudentResponse> getStudentsByName(String name){
+        List<Student> students = studentRepository.findByNameContainingIgnoreCase(name);
+        return students.stream().map(studentMapper::toResponse).toList();
+    }
 }
 

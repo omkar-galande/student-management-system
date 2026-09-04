@@ -1,12 +1,17 @@
 package com.omkar.student_management.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({
+        "id",
+        "name",
+        "email",
+        "course",
+        "phone",
+        "address"
+})
 public class StudentResponse {
-    private Long id;
-    private String name;
-    private String email;
-    private String course;
-    private String phone;
-    private String address;
+
 
     public Long getId() {
         return id;
@@ -55,4 +60,12 @@ public class StudentResponse {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    private Long id;
+    private String name;
+    private String email;
+    private String course;
+    private String phone;
+    private String address;
+
 }
