@@ -54,15 +54,28 @@ public class StudentController {
     }
 
     @GetMapping("/course/{course}")
-    public List<StudentResponse> getStudentByCourse(@PathVariable String course){
-        return studentService.getStudentByCourse(course);
+    public Page<StudentResponse> getStudentByCourse(@PathVariable String course,Pageable pageable){
+        return studentService.getStudentByCourse(course, pageable);
     }
 
     @GetMapping("/name/{name}")
-    public List<StudentResponse> getStudentsByName(@PathVariable String name) {
-        return studentService.getStudentsByName(name);
+    public Page<StudentResponse> getStudentsByName(@PathVariable String name, Pageable pageable) {
+        return studentService.getStudentsByName(name, pageable);
     }
 
+    @GetMapping("/search/filter")
+    public List<StudentResponse> searchStudents(@RequestParam String name,
+                                                @RequestParam String course){
+        return studentService.searchStudents(name,course);
+    }
+
+    @GetMapping("/search/courses")
+    public List<StudentResponse> getStudentsByCourses(
+            @RequestParam String course1,
+            @RequestParam String course2) {
+
+        return studentService.getStudentsByCourses(course1, course2);
+    }
 //    @ExceptionHandler(StudentNotFoundException.class)
 //    @ResponseStatus(HttpStatus.NOT_FOUND)
 //    public String handleStudentNotFound(StudentNotFoundException ex){

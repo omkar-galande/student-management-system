@@ -77,15 +77,30 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public List<StudentResponse> getStudentByCourse(String course){
-        List<Student> students = studentRepository.findByCourse(course);
+    public Page<StudentResponse> getStudentByCourse(String course,Pageable pageable){
+        Page<Student> students =
+                studentRepository.findByCourse(course,pageable);
 
+        return students.map(studentMapper::toResponse);
+    }
+
+    public Page<StudentResponse> getStudentsByName(String name, Pageable pageable){
+        Page<Student> students = studentRepository.findByNameContainingIgnoreCase(name, pageable);
+        return students.map(studentMapper::toResponse);
+    }
+
+    public List<StudentResponse> searchStudents(String name, String course){
+        List<Student> students = studentRepository.findByNameContainingIgnoreCaseAndCourse(name, course);
         return students.stream().map(studentMapper::toResponse).toList();
     }
 
-    public List<StudentResponse> getStudentsByName(String name){
-        List<Student> students = studentRepository.findByNameContainingIgnoreCase(name);
-        return students.stream().map(studentMapper::toResponse).toList();
+    public List<StudentResponse> getStudentsByCourses(String course1, String course2) {
+        List<Student> students =
+                studentRepository.findByCourseOrCourse(course1, course2);
+
+        return students.stream()
+                .map(studentMapper::toResponse)
+                .toList();
     }
 }
 
