@@ -2,6 +2,7 @@ package com.omkar.student_management.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -13,7 +14,10 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(httpBasic -> {})
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/students/health").permitAll()
+                        .requestMatchers(HttpMethod.DELETE,"/students/**").hasRole()
+                        .anyRequest().authenticated());
         return http.build();
     }
 }

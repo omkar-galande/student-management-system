@@ -76,6 +76,11 @@ public class StudentController {
 
         return studentService.getStudentsByCourses(course1, course2);
     }
+
+    @GetMapping("/health")
+    public String health(){
+        return "Student API is working";
+    }
 //    @ExceptionHandler(StudentNotFoundException.class)
 //    @ResponseStatus(HttpStatus.NOT_FOUND)
 //    public String handleStudentNotFound(StudentNotFoundException ex){
