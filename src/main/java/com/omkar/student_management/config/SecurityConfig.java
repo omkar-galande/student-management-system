@@ -4,9 +4,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.authentication.PasswordEncoderParser;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -26,21 +29,27 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder){
         UserDetails admin = User.builder()
                 .username("admin")
-                .password("{noop}admin@123")
+                .password(passwordEncoder.encode("admin@123"))
                 .roles("ADMIN")
                 .build();
 
+
         UserDetails student = User.builder()
                 .username("student")
-                .password("{noop}student@123")
+                .password(passwordEncoder.encode("student@123"))
                 .roles("STUDENT")
                 .build();
 
         return new InMemoryUserDetailsManager(admin, student);
 
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
 }
