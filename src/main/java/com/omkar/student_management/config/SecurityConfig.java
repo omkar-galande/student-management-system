@@ -21,8 +21,10 @@ public class SecurityConfig {
                 .httpBasic(httpBasic -> {})
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/students/health").permitAll()
+                                .requestMatchers("/auth/register").permitAll()
                         .requestMatchers(HttpMethod.DELETE,"/students/**").hasRole("ADMIN")
-                        .anyRequest().authenticated());
+                        .anyRequest().authenticated()
+                        );
         return http.build();
     }
 
