@@ -2,6 +2,7 @@ package com.omkar.student_management.service;
 
 import com.omkar.student_management.dto.RegisterRequest;
 import com.omkar.student_management.entity.User;
+import com.omkar.student_management.exception.UsernameAlreadyExistsException;
 import com.omkar.student_management.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,10 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
     public void register(RegisterRequest request) {
+
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            throw new UsernameAlreadyExistsException("Username already exists");
+        }
 
         User user = new User();
 

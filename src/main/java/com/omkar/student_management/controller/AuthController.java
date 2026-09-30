@@ -2,6 +2,7 @@ package com.omkar.student_management.controller;
 
 import com.omkar.student_management.dto.RegisterRequest;
 import com.omkar.student_management.service.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +16,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
+    public String register(@Valid @RequestBody RegisterRequest request) {
         authService.register(request);
         return "User registered successfully";
     }

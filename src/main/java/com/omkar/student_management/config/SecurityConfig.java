@@ -15,16 +15,18 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws  Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(httpBasic -> {})
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/students/health").permitAll()
-                                .requestMatchers("/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.DELETE,"/students/**").hasRole("ADMIN")
+                        .requestMatchers("/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/students/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
-                        );
+                );
+
         return http.build();
     }
 
@@ -40,15 +42,21 @@ public class SecurityConfig {
     public CommandLineRunner createAdmin(UserRepository userRepository,
                                          PasswordEncoder passwordEncoder) {
         return args -> {
-            User user = new User();
-            user.setUsername("admin");
-            user.setPassword(passwordEncoder.encode("admin@123"));
-            user.setRole("ADMIN");
 
-            userRepository.save(user);
+            if (userRepository.findByUsername("admin").isEmpty()) {
+
+                User user = new User();
+
+                user.setUsername("admin");
+                user.setPassword(passwordEncoder.encode("admin@123"));
+                user.setRole("ADMIN");
+
+                userRepository.save(user);
+            }
         };
-
     }
+
+
     
 
 }

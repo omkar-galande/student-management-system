@@ -1,8 +1,12 @@
 package com.omkar.student_management.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class RegisterRequest {
 
+    @NotBlank
     private String username;
+    @NotBlank
     private String password;
 //    private String role;
 
