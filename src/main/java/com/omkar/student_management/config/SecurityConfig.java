@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -23,12 +24,17 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
 
-                .httpBasic(httpBasic -> {})
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(
+                                SessionCreationPolicy.STATELESS
+                        )
+                )
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/students/health").permitAll()
                         .requestMatchers("/auth/register", "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/students/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/students/**")
+                        .hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
 

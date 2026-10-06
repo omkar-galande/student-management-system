@@ -1,7 +1,8 @@
 package com.omkar.student_management.service;
-
+import org.springframework.beans.factory.annotation.Value;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -11,7 +12,8 @@ import java.util.Date;
 @Service
 public class JwtService{
 
-    private final String secret = "omkar-student-management-secret-key-2026";
+    @Value("${jwt.secret}")
+    private String secret;
 
     private final long expirationTime = 1000*60*60;
 
